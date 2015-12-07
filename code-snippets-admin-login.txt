@@ -1,0 +1,54 @@
+//START SNIPPET FOR config.php SNIPPET #1----------------------------
+
+//place these two constant definitions BELOW VIRTUAL_PATH
+define('PREFIX', 'itc240_'); #Adds uniqueness to your DB table names.  Limits hackability, naming collisions
+
+define('ADMIN_PATH', VIRTUAL_PATH); # Path to Admin files: could change to https://, etc.
+
+//END SNIPPET FOR config.php SNIPPET #1----------------------------
+
+//START SNIPPET FOR config.php SNIPPET #2----------------------------
+
+//place these variable definitions toward the very bottom of config.php
+
+//PS: REMOVE OR MOVE ALL REMAINING FUNCTIONS IN config to common.php NOW!
+
+if(startSession() && isset($_SESSION['AdminID']))
+{#add admin logged in info to sidebar or nav
+	$adminWidget = '<li><a href="' . ADMIN_PATH . 'admin_dashboard.php">ADMIN</a></li>';
+	$adminWidget .= '<li><a href="' . ADMIN_PATH . 'admin_logout.php">LOGOUT</a> ';
+    $adminWidget .= '<li>' . $_SESSION['Privilege'] . ' <b>' . $_SESSION['FirstName'] . '</b> is logged in. </li>';
+}else{
+    $adminWidget = '';
+}
+
+/*
+ * These variables, when added to the header.php and footer.php files, 
+ * allow custom JS or CSS scripts to be loaded into <head> element and 
+ * just before the closing body tag, respectively
+ */
+$loadhead = '';
+$loadfoot = '';
+
+//END SNIPPET FOR config.php SNIPPET #2----------------------------
+
+//START SNIPPET FOR header.php SNIPPET #3----------------------------
+
+//place as low inside header.php as possible:
+<?=showFeedback();?>
+
+//END SNIPPET FOR header.php SNIPPET #3----------------------------
+
+//START SNIPPET FOR header.php SNIPPET #4----------------------------
+
+//place just before the closing <head> tag:
+<?=$loadhead;?>
+
+//END SNIPPET FOR header.php SNIPPET #4----------------------------
+
+//START SNIPPET FOR footer.php SNIPPET #5----------------------------
+
+//place just before the closing <body> tag:
+<?=$loadfoot;?>
+
+//END SNIPPET FOR footer.php SNIPPET #5----------------------------

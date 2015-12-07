@@ -37,6 +37,5 @@
 		<div id="content">
 			<div>
 				<div>
-                    <div>
-                    <?=showFeedback()?>
+
                     <!-- header ends here -->

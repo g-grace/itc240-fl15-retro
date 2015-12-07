@@ -1,15 +1,14 @@
 <?php
-//cookies_list.php - shows a list of cookies
-
+//customer_list.php - shows a list of customer data
 require 'includes/config.php'; #provides configuration, pathing, error handling, db credentials 
  
 # SQL statement
 //$sql = "select MuffinName, MuffinID, Price from test_Muffins";
 
-$sql = "select Cookie, Brand, CookiesID, Description from Cookies";
+$sql = "select FirstName, LastName, CustomerID, Email from test_Customers";
 
 #Fills <title> tag  
-$title = 'Cookies are prepared and made with a considerated care in Seattle';
+$title = 'Customers are served with a considerated care in Seattle';
 
 # END CONFIG AREA ---------------------------------------------------------- 
 include 'includes/header.php';
@@ -17,7 +16,7 @@ include 'includes/header.php';
 
 <h1><?=$pageID?></h1>
 <?php
-$sql = "select * from Cookies";
+$sql = "select * from test_Customers";
 //we connect to the db here
 $iConn = mysqli_connect(DB_HOST,DB_USER,DB_PASSWORD,DB_NAME);
 
@@ -30,18 +29,17 @@ if(mysqli_num_rows($result) > 0)
     while($row = mysqli_fetch_assoc($result))
     {
     echo '<p>';
-    echo 'Cookie: <b>' . $row['Cookie']. '</b> ';
-    echo 'Brand: <b>' . $row ['Brand'] . '</b> ';
-    echo 'Calories: <b>' . $row ['Calories'] . '</b> ';
-    echo 'Description: <b>' . $row ['Description'] . '</b> ';
+    echo 'FirstName: <b>' . $row['FirstName']. '</b> ';
+    echo 'LastName: <b>' . $row ['LastName'] . '</b> ';
+    echo 'Email: <b>' . $row ['Email'] . '</b> ';
         
-    echo '<a href="cookies_view.php?id=' . $row['CookiesID'] . '"> ' . $row['Cookie'] . '</a>'; 
+    echo '<a href="customer_view.php?id=' . $row['CustomerID'] . '"> ' . $row['FirstName'] . '</a>'; 
         
     echo '</p>'; 
     }
     
 }else{//inform there are no records
-    echo '<p>There are currently no cookie</p>';
+    echo '<p>There are currently no customers</p>';
 }    
 
 //release web server resources
@@ -74,16 +72,16 @@ $result = mysqli_query($iConn,$sql) or die(myerror(__FILE__,__LINE__,mysqli_erro
 
 if(mysqli_num_rows($result) > 0)
 {#records exist - process
-	if($myPager->showTotal()==1){$itemz = "cookie";}else{$itemz = "cookies";}  //deal with plural
+	if($myPager->showTotal()==1){$itemz = "customer";}else{$itemz = "customers";}  //deal with plural
     echo '<div align="center">We have ' . $myPager->showTotal() . ' ' . $itemz . '!</div>';
 	while($row = mysqli_fetch_assoc($result))
 	{# process each row
-         echo '<div align="center"><a href="' . VIRTUAL_PATH . 'cookies_view.php?id=' . (int)$row['Cookies'] . '">' . dbOut($row['Brand']) . '</a>';
-         echo ' <i>is</i> <font color="red">' . (int)$row['CookiesID']  . '</font></div>';
+         echo '<div align="center"><a href="' . VIRTUAL_PATH . 'customer_view.php?id=' . (int)$row['CustomerID'] . '">' . dbOut($row['FirstName']) . '</a>';
+         echo ' <i>is First</i> <font color="red">' . (int)$row['CustomerID']  . '</font></div>';
 	}
 	echo $myPager->showNAV(); # show paging nav, only if enough records	 
 }else{#no records
-    echo "<div align=center>What! No cookies?  There must be a mistake!!</div>";	
+    echo "<div align=center>What! No customers?  There must be a mistake!!</div>";	
 }
 @mysqli_free_result($result);
 
